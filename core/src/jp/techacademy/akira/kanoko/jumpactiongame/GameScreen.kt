@@ -3,6 +3,7 @@ package jp.techacademy.akira.kanoko.jumpactiongame
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Preferences // ←追加する
 import com.badlogic.gdx.ScreenAdapter
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -52,6 +53,8 @@ class GameScreen(private val mGame: JumpActionGame) : ScreenAdapter() {
     private var mScore: Int // ←追加する
     private var mHighScore: Int // ←追加する
     private var mPrefs: Preferences // ←追加する
+    private var sound: Sound = Gdx.audio.newSound(Gdx.files.internal("data/bomb1.mp3"))
+
 
     init {
         // 背景の準備
@@ -278,6 +281,8 @@ class GameScreen(private val mGame: JumpActionGame) : ScreenAdapter() {
             }
 
             if (mPlayer.boundingRectangle.overlaps(enemy.boundingRectangle)) {
+                sound.play(1.0f);
+                sound.dispose()
                 mGameState = GAME_STATE_GAMEOVER
                 return
                 }
